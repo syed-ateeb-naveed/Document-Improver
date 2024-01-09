@@ -1,6 +1,5 @@
 import time
 import fitz
-import PyPDF2
 from docx import Document
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -14,7 +13,7 @@ def create_temp_file(uploaded_file):
         return temp_file.name
     
 def count_words_in_docx(file_path):
-    doc = Document(file_path)
+    doc = Document(create_temp_file(file_path))
     total_words = 0
 
     for paragraph in doc.paragraphs:
@@ -48,13 +47,20 @@ def summarize(text, language="english", sentences_count=5):
     return ' '.join([str(sentence) for sentence in summary])
 
 def read_text_from_docx(file_path):
-    doc = Document(file_path)
-    text = ""
+        
+    try:
+        doc = Document(create_temp_file(file_path))
+        text = ""
 
-    for paragraph in doc.paragraphs:
-        text += paragraph.text + '\n'
+        for paragraph in doc.paragraphs:
+            text += paragraph.text + '\n'
 
-    return text.strip()
+        return text.strip()
+    
+    except Exception as e:
+        print(f"Error reading PDF: {e}")
+        return None
+
 
 def read_text_from_pdf(file_path):
 
@@ -67,6 +73,7 @@ def read_text_from_pdf(file_path):
             text += page.get_text("text") + '\n'
 
         return text.strip()
+    
     except Exception as e:
         print(f"Error reading PDF: {e}")
         return None
