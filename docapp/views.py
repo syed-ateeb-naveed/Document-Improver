@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserFrom
-from .summarizer import summarize, read_text_from_docx, calculate_sentences_count
+from .summarizer import summarize, read_text_from_docx, read_text_from_pdf, calculate_sentences_count
 
 # Create your views here.
 
@@ -53,9 +53,18 @@ def index(request):
 
 @login_required
 def summarization(request):
-    if request.method == 'POST' and request.FILES.get('docx_file'):
-        docx_file = request.FILES['docx_file']
-        summary = summarize(read_text_from_docx(docx_file), language="english", sentences_count=calculate_sentences_count(docx_file))
+    if request.method == 'POST' and request.FILES.get('uploaded_file'):
+        uploaded_file = request.FILES['uploaded_file']
+
+        if uploaded_file.name.endswith('.docx'):
+            text_content = read_text_from_docx(uploaded_file)
+        elif uploaded_file.name.endswith('.pdf'):
+            text_content = read_text_from_pdf(uploaded_file)
+        else:
+            raise ValueError("Unsupported file format")
+        
+        sentences_count = calculate_sentences_count(uploaded_file)
+        summary = summarize(text_content, language="english", sentences_count=sentences_count)
         return render(request, 'summarization_result.html', {'summary': summary})
 
     return render(request, 'summarization_form.html')
