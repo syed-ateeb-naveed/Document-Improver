@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Summarization Result</h2>
+    <p>{{ summary }}</p>
+    <a href="{% url 'summarization' %}">Back to Summarization</a>
+{% endblock%}

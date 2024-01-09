@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserFrom
+from .summarizer import summarize, read_text_from_docx, calculate_sentences_count
 
 # Create your views here.
 
@@ -29,11 +30,6 @@ def logout_user(request):
 
     return redirect('login')
 
-@login_required
-def index(request):
-
-    return render(request, 'index.html', {})
-
 def register_user(request):
     if request.method == "POST":
         form = RegisterUserFrom(request.POST)
@@ -49,3 +45,17 @@ def register_user(request):
         form = RegisterUserFrom()
 
     return render(request, 'register.html', {'form' : form})
+
+@login_required
+def index(request):
+
+    return render(request, 'index.html', {})
+
+@login_required
+def summarization(request):
+    if request.method == 'POST' and request.FILES.get('docx_file'):
+        docx_file = request.FILES['docx_file']
+        summary = summarize(read_text_from_docx(docx_file), language="english", sentences_count=calculate_sentences_count(docx_file))
+        return render(request, 'summarization_result.html', {'summary': summary})
+
+    return render(request, 'summarization_form.html')
