@@ -14,5 +14,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('summarize/', views.summarization, name='summarization'),
     path('spelling/', views.spelling, name='spelling'),
-     path('create_and_download_file/', views.create_and_download_file, name='create_and_download_file'),
+    path('create_and_download_file/', views.create_and_download_file, name='create_and_download_file'),
 ]

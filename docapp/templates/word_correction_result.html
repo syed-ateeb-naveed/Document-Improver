@@ -3,6 +3,9 @@
 {% block content %}
 <div class='text-center'><h2>spelling Correction Result</h2>
     <p>{{ spelling }}</p>
-
     <a class='btn-success border' href="{% url 'create_and_download_file' %}">Create and Download File</a></div>
+
+    <a class='btn-success border' href="{{ download_link }}" download>Download File</a></div>
+    <button type="submit">Download Corrected Document</button>
+
 {% endblock%}

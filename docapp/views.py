@@ -96,9 +96,25 @@ def spelling(request):
         
       
         spelling = correct_spelling(text_content)
+
+        doc = Document()
+
+            # Add text to the document
+        doc.add_heading('Corrected Spelling Document', level=1)
+        doc.add_paragraph(spelling)  # Uncomment this line if you want to include the corrected text
+
+            # Save the document to an in-memory file
+        buffer = io.BytesIO()
+        doc.save(buffer)
+
+            # Create a response and set the content type to MS Word
+        response = HttpResponse(buffer.getvalue(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+
+            # Set the Content-Disposition header to force the browser to download the file
+        response['Content-Disposition'] = 'attachment; filename=corrected_document.docx'
+        return response
         
-        
-        return render(request, 'word_correction_result.html', {'spelling': spelling})
+        return render(request, 'word_correction_result.html', {'spelling': spelling, 'download_link': response})
 
     return render(request, 'word_correction.html')
 
