@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+    <h2>Upload Document for Correction of spelling</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="uploaded_file">Choose a document (only .docx or .pdf):</label>
+        <input type="file" name="uploaded_file" accept=".docx, .pdf" required>
+        <br>
+        <button type="submit">correct it</button>
+    </form>
+
+{%endblock%}

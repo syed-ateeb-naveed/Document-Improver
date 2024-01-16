@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserFrom
 from .summarizer import summarize, read_text_from_docx, read_text_from_pdf, calculate_sentences_count
+from .spelling import correct_spelling
 
 # Create your views here.
 
@@ -68,3 +69,24 @@ def summarization(request):
         return render(request, 'summarization_result.html', {'summary': summary})
 
     return render(request, 'summarization_form.html')
+
+
+@login_required
+def spelling(request):
+    if request.method == 'POST' and request.FILES.get('uploaded_file'):
+        uploaded_file = request.FILES['uploaded_file']
+
+        if uploaded_file.name.endswith('.docx'):
+            text_content = read_text_from_docx(uploaded_file)
+        elif uploaded_file.name.endswith('.pdf'):
+            text_content = read_text_from_pdf(uploaded_file)
+        else:
+            raise ValueError("Unsupported file format")
+        
+      
+        spelling = correct_spelling(text_content)
+        # write_text_to_file(uploaded_file,text_content)
+        
+        return render(request, 'word_correction_result.html', {'spelling': spelling})
+
+    return render(request, 'word_correction.html')
