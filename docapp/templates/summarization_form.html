@@ -1,14 +1,58 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
-{%block content%}
-
-    <h2>Upload Document for Summarization</h2>
-    <form method="post" enctype="multipart/form-data">
+{% block content %}
+  <div class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="card shadow p-4">
+      <h2 class="mb-4 text-center">Upload Document for Summarization</h2>
+      
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="uploaded_file">Choose a document (only .docx or .pdf):</label>
-        <input type="file" name="uploaded_file" accept=".docx, .pdf" required>
-        <br>
-        <button type="submit">Summarize</button>
-    </form>
+        
+        <div class="mb-3">
+          <label for="uploaded_file" class="form-label">Choose a document (only .docx or .pdf):</label>
+          <input type="file" class="form-control" name="uploaded_file" accept=".docx, .pdf" required>
+        </div>
+        
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="bi bi-file-earmark-arrow-up"></i> Summarize
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-{%endblock%}
+  <style>
+    .card {
+      max-width: 600px;
+      width: 100%; /* Ensures responsiveness */
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .form-label {
+      font-size: 1.1rem;
+    }
+
+    .btn-lg {
+      padding: 10px 20px;
+      font-size: 1.2em;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+  </style>
+
+{% endblock %}

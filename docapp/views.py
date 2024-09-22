@@ -12,13 +12,6 @@ import io
 
 # Create your views here.
 
-
-
-
-
-
-
-
 def login_user(request):
 
     if request.method == "POST":
