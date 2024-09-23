@@ -1,7 +1,8 @@
-# Document-Improver
+# Document++
 
 ## Overview
-Document-Improver is a Django-based web application that allows users to upload documents in `.docx` or `.pdf` format to perform two main functions:
+Document++ is a Django-based web application that allows users to upload documents in `.docx` or `.pdf` format to perform functions, currently:
+
 1. **Summarization**: Summarize long documents into concise versions.
 2. **Spelling Correction**: Correct spelling errors in the uploaded documents.
 
@@ -102,3 +103,10 @@ This application uses various libraries to handle document processing, summariza
 ![image](https://github.com/user-attachments/assets/5bb840cf-b416-494c-b442-102811b37103)
 ![image](https://github.com/user-attachments/assets/d02a471b-c696-4e6a-b2ba-da697e5bec03)
 
+## Future Expansions
+
+I plan to add the following features:
+
+1. **Markup Support**: To be able to markup the document(s) with text, shapes, and/or drawings.
+2. **Document Bot**: An AI bot which answers questions from the uploaded document.
+3. **PDF Merge**: Feature to merge 2 or more PDFs.
